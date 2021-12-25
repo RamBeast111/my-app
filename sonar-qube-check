@@ -1,32 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@RamBeast111 
-javahometech
-
-my-app
-Public
-Code
-Issues
-Pull requests
-81
-Actions
-Projects
-Wiki
-Security
-Insights
-my-app/sonarqube-analysis
-@javahometech
-javahometech Update sonarqube-analysis
-Latest commit a028272 on 18 Apr 2018
- History
- 1 contributor
-32 lines (29 sloc)  952 Bytes
-   
 node{
    stage('SCM Checkout'){
      git 'https://github.com/javahometech/my-app'
@@ -59,3 +30,4 @@ node{
    }
 
 }
+
