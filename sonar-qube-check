@@ -1,0 +1,61 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@RamBeast111 
+javahometech
+/
+my-app
+Public
+Code
+Issues
+Pull requests
+81
+Actions
+Projects
+Wiki
+Security
+Insights
+my-app/sonarqube-analysis
+@javahometech
+javahometech Update sonarqube-analysis
+Latest commit a028272 on 18 Apr 2018
+ History
+ 1 contributor
+32 lines (29 sloc)  952 Bytes
+   
+node{
+   stage('SCM Checkout'){
+     git 'https://github.com/javahometech/my-app'
+   }
+   stage('Compile-Package'){
+      // Get maven home path
+      def mvnHome =  tool name: 'maven-3', type: 'maven'   
+      sh "${mvnHome}/bin/mvn package"
+   }
+   
+   stage('SonarQube Analysis') {
+        def mvnHome =  tool name: 'maven-3', type: 'maven'
+        withSonarQubeEnv('sonar-6') { 
+          sh "${mvnHome}/bin/mvn sonar:sonar"
+        }
+    }
+   
+   stage('Email Notification'){
+      mail bcc: '', body: '''Hi Welcome to jenkins email alerts
+      Thanks
+      Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'hari.kammana@gmail.com'
+   }
+   stage('Slack Notification'){
+       slackSend baseUrl: 'https://hooks.slack.com/services/',
+       channel: '#jenkins-pipeline-demo',
+       color: 'good', 
+       message: 'Welcome to Jenkins, Slack!', 
+       teamDomain: 'javahomecloud',
+       tokenCredentialId: 'slack-demo'
+   }
+
+}
